@@ -37,7 +37,7 @@ class Colors:
         return tuple(int(h[1 + i:1 + i + 2], 16) for i in (0, 2, 4))
 
 
-colors = Colors()  # create instance for 'from utils.plots import colors'
+colors = Colors()  # create instance for 'from mdm.utils.plots import colors'
 
 
 class Annotator:
@@ -279,7 +279,7 @@ def plot_images(images,
 
 
 def plot_results(file='path/to/results.csv', dir='', segment=False):
-    # Plot training results.csv. Usage: from utils.plots import *; plot_results('path/to/results.csv')
+    # Plot training results.csv. Usage: from mdm.utils.plots import *; plot_results('path/to/results.csv')
     save_dir = Path(file).parent if file else Path(dir)
     if segment:
         fig, ax = plt.subplots(2, 8, figsize=(18, 6), tight_layout=True)

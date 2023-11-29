@@ -21,7 +21,7 @@ from ultralytics.yolo.utils.checks import check_requirements
 
 class LoadStreams:
     # YOLOv8 streamloader, i.e. `python detect.py --source 'rtsp://example.com/media.mp4'  # RTSP, RTMP, HTTP streams`
-    def __init__(self, sources='file.streams', imgsz=640, stride=32, auto=True, transforms=None, vid_stride=1):
+    def __init__(self, sources='file.streams', imgsz=640, stride=32, auto=True, transforms=None, vid_stride=1, return_dict = {}):
         torch.backends.cudnn.benchmark = True  # faster for fixed-size inference
         self.mode = 'stream'
         self.imgsz = imgsz
@@ -64,6 +64,7 @@ class LoadStreams:
         self.transforms = transforms  # optional
         if not self.rect:
             LOGGER.warning('WARNING ⚠️ Stream shapes differ. For optimal performance supply similarly-shaped streams.')
+        self.return_dict = return_dict
 
     def update(self, i, cap, stream):
         # Read stream `i` frames in daemon thread
@@ -79,7 +80,13 @@ class LoadStreams:
                     LOGGER.warning('WARNING ⚠️ Video stream unresponsive, please check your IP camera connection.')
                     self.imgs[i] = np.zeros_like(self.imgs[i])
                     cap.open(stream)  # re-open stream if signal was lost
-            time.sleep(0.0)  # wait time
+                    
+                time.sleep(0.0)  # wait time
+                self.return_dict['new_img'] = True
+                if self.return_dict['recording']:
+                    self.return_dict['images_acc_show'].append(self.return_dict['img_show'])
+                    self.return_dict['images_acc'].append(im)
+            
 
     def __iter__(self):
         self.count = -1

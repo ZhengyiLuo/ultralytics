@@ -504,6 +504,6 @@ def guess_model_task(model):
             elif isinstance(m, Classify):
                 return "classify"
 
-    # Unable to determine task from model
+    # Unable to determine task from mdm.model
     raise SyntaxError("YOLO is unable to automatically guess model task. Explicitly define task for your model, "
                       "i.e. 'task=detect', 'task=segment' or 'task=classify'.")

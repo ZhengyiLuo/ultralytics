@@ -217,7 +217,7 @@ class AutoBackend(nn.Module):
             '''
             TODO:
             check_requirements('tritonclient[all]')
-            from utils.triton import TritonRemoteModel
+            from mdm.utils.triton import TritonRemoteModel
             model = TritonRemoteModel(url=w)
             nhwc = model.runtime.startswith("tensorflow")
             '''
@@ -361,7 +361,7 @@ class AutoBackend(nn.Module):
         Args:
             p: path to the model file. Defaults to path/to/model.pt
         """
-        # Return model type from model path, i.e. path='path/to/model.onnx' -> type=onnx
+        # Return model type from mdm.model path, i.e. path='path/to/model.onnx' -> type=onnx
         # types = [pt, jit, onnx, xml, engine, coreml, saved_model, pb, tflite, edgetpu, tfjs, paddle]
         from ultralytics.yolo.engine.exporter import export_formats
         sf = list(export_formats().Suffix)  # export suffixes
